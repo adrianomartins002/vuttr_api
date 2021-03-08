@@ -6,7 +6,7 @@
   "password": "postgres",
   "database": "vuttr",
   "entities": [
-    "./src/models/*entity.{js,ts}"
+    "./src/models/*.{js,ts}"
   ],
   "migrations": [
     "./src/database/migrations/*.{js,ts}"
