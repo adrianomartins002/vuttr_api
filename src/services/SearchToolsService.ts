@@ -51,6 +51,9 @@ class SearchToolsService {
         ids.push(tools[i].id);
       }
 
+      if (ids.length === 0)
+        return [];
+
       const toolsWithTags = await toolsRepository
         .createQueryBuilder('tools').
         innerJoinAndSelect('tools.tags', 'tags').
