@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  description: "Este swagger foi feito para documentar as rotas e chamadas da aplicação vuttr"
+  version: "1.0.0"
+  title: "Swagger Vuttr"
+  contact:
+    email: "adrianomartins002@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/v2"
+tags:
+- name: "tools"
+  description: "Tudo em relação aos tools"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /tools:
+    post:
+      tags:
+      - "tools"
+      summary: "Cria uma nova ferramenta"
+      description: ""
+      operationId: "addTool"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Tool object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Tools"
+      responses:
+        "201":
+          description: "Created"
+        "500":
+          description: "internal server error"
+        "409":
+          description: "Conflict"
+
+    get:
+      tags:
+      - "tools"
+      summary: "Find all tools and can pass param tag"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "available"
+          - "pending"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Tools"
+        "400":
+          description: "Invalid status value"
+
+  /tools/{toolsId}:
+    delete:
+      tags:
+      - "tools"
+      summary: "Deletes a tool"
+      description: ""
+      operationId: "deleteTool"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "toolsId"
+        in: "path"
+        description: "Tool id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Tool not found"
+
+
+definitions:
+  Tools:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+        format: "varchar"
+      description:
+        type: "string"
+        format: "varchar"
+      link:
+        type: "string"
+        format: "varchar"
+      tag:
+        type: "integer"
+        description: "id of tag"
+
+  tag:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
