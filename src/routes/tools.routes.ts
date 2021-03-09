@@ -18,7 +18,7 @@ toolsRouter.post('/', async (request, response) => {
 
     const tools = await createTools.execute({ title, link, description, tags });
 
-    return response.json(tools);
+    return response.status(201).json(tools);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
